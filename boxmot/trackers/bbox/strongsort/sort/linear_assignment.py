@@ -3,10 +3,8 @@
 from __future__ import absolute_import
 
 import numpy as np
-import torch
-from scipy.optimize import linear_sum_assignment
-
 from boxmot.utils.matching import chi2inv95
+from scipy.optimize import linear_sum_assignment
 
 INFTY_COST = 1e5
 
@@ -220,6 +218,7 @@ def _cosine_distance(a, b, data_is_normalized=False):
         b = np.asarray(b) / np.linalg.norm(b, axis=1, keepdims=True)
     return 1.0 - np.dot(a, b.T)
 
+
 def _pdist(a, b):
     """Compute pair-wise squared distance between points in `a` and `b`.
     Parameters
@@ -259,8 +258,8 @@ def _nn_euclidean_distance(x, y):
     """
     # x_ = torch.from_numpy(np.asarray(x) / np.linalg.norm(x, axis=1, keepdims=True))
     # y_ = torch.from_numpy(np.asarray(y) / np.linalg.norm(y, axis=1, keepdims=True))
-    distances = distances = _pdist(x, y)
-    return np.maximum(0.0, torch.min(distances, axis=0)[0].numpy())
+    distances = _pdist(x, y)
+    return np.maximum(0.0, np.min(distances, axis=0))
 
 
 def _nn_cosine_distance(x, y):
@@ -277,11 +276,12 @@ def _nn_cosine_distance(x, y):
         A vector of length M that contains for each entry in `y` the
         smallest cosine distance to a sample in `x`.
     """
-    x_ = torch.from_numpy(np.asarray(x))
-    y_ = torch.from_numpy(np.asarray(y))
+    x_ = np.asarray(x)
+    y_ = np.asarray(y)
     distances = _cosine_distance(x_, y_)
     distances = distances
     return distances.min(axis=0)
+
 
 class NearestNeighborDistanceMetric(object):
     """
