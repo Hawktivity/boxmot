@@ -6,6 +6,8 @@ symbols are re-exported lazily from ``boxmot.api`` so both ``import boxmot.api``
 and ``from boxmot import Boxmot`` remain supported.
 """
 
+from __future__ import annotations
+
 from importlib import import_module
 from typing import TYPE_CHECKING
 
