@@ -23,7 +23,7 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import Any, Callable
 
-from boxmot.utils.misc import resolve_model_path
+# from boxmot.utils.misc import resolve_model_path
 
 PROGRESS_PREFIX = "BOXMOT_PROGRESS\t"
 

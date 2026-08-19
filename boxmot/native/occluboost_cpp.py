@@ -28,7 +28,7 @@ from boxmot.native._common import (
     resolve_reid_model_ref as _resolve_reid_model_ref,
 )
 from boxmot.trackers.tracker_zoo import get_tracker_config
-from boxmot.utils.misc import resolve_model_path  # noqa: F401  (used by tests via monkeypatch)
+# from boxmot.utils.misc import resolve_model_path  # noqa: F401  (used by tests via monkeypatch)
 
 
 def _default_preprocess() -> str:

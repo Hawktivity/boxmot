@@ -4,7 +4,7 @@ import importlib
 
 import yaml
 
-from boxmot.reid.core import ReID
+# from boxmot.reid.core import ReID
 from boxmot.utils import TRACKER_CONFIGS
 
 REID_TRACKERS = ["strongsort", "botsort", "deepocsort", "hybridsort", "boosttrack", "occluboost"]
