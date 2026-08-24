@@ -22,3 +22,13 @@ frame_rate:
   type: choice
   default: 30  # from the default parameters
   options: [25, 30]  # static choice for Ray Search
+
+std_weight_position:
+  type: choice
+  default: 0.05
+  options: [0.05]
+
+std_weight_velocity:
+  type: choice
+  default: 0.00625
+  options: [0.00625]

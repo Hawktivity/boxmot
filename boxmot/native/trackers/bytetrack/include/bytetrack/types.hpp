@@ -24,6 +24,8 @@ struct Config {
     int track_buffer = 30;
     int frame_rate = 30;
     int max_obs = 50;
+    double std_weight_position = 1.0 / 20.0;
+    double std_weight_velocity = 1.0 / 160.0;
 };
 
 struct Detection {

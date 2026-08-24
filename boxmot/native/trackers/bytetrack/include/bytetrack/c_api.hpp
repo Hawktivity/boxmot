@@ -9,7 +9,7 @@
 #    define BOXMOT_BYTETRACK_API __declspec(dllimport)
 #  endif
 #else
-#  define BOXMOT_BYTETRACK_API __attribute__((visibility("default")))
+#define BOXMOT_BYTETRACK_API __attribute__((visibility("default")))
 #endif
 
 extern "C" {
@@ -21,6 +21,8 @@ struct BoxMOTByteTrackConfig {
     int track_buffer;
     int frame_rate;
     int max_obs;
+    float std_weight_position;
+    float std_weight_velocity;
 };
 
 struct BoxMOTByteTrackHandle;

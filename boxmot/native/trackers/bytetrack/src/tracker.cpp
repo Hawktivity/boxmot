@@ -171,7 +171,10 @@ std::pair<std::vector<Track::Ptr>, std::vector<Track::Ptr>> RemoveDuplicateTrack
 
 ByteTrackTracker::ByteTrackTracker(Config config)
     : config_(std::move(config)),
-      max_time_lost_(static_cast<int>((static_cast<double>(config_.frame_rate) / 30.0) * static_cast<double>(config_.track_buffer))) {
+      max_time_lost_(static_cast<int>((static_cast<double>(config_.frame_rate) / 30.0) *
+                                      static_cast<double>(config_.track_buffer))),
+      kalman_filter_(config_.std_weight_position, config_.std_weight_velocity),
+      kalman_filter_obb_(5, config_.std_weight_position, config_.std_weight_velocity) {
     Track::ResetCount();
     if (max_time_lost_ <= 0) {
         max_time_lost_ = config_.track_buffer;

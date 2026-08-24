@@ -9,7 +9,8 @@ public:
     using Vector = Eigen::VectorXd;
     using Matrix = Eigen::MatrixXd;
 
-    KalmanFilterXYAH();
+    explicit KalmanFilterXYAH(double std_weight_position = 1.0 / 20.0,
+                              double std_weight_velocity = 1.0 / 160.0);
 
     std::pair<Vector, Matrix> Initiate(const Eigen::Vector4d& measurement) const;
     std::pair<Vector, Matrix> Predict(const Vector& mean, const Matrix& covariance) const;
@@ -37,7 +38,9 @@ public:
     using Vector = Eigen::VectorXd;
     using Matrix = Eigen::MatrixXd;
 
-    explicit KalmanFilterXYWH(int ndim = 4);
+    explicit KalmanFilterXYWH(int ndim = 4,
+                              double std_weight_position = 1.0 / 20.0,
+                              double std_weight_velocity = 1.0 / 160.0);
 
     [[nodiscard]] int ndim() const { return ndim_; }
     [[nodiscard]] int dim_x() const { return dim_x_; }

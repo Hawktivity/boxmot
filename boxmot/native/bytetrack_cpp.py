@@ -83,6 +83,8 @@ class _ByteTrackCConfig(ctypes.Structure):
         ("track_buffer", ctypes.c_int),
         ("frame_rate", ctypes.c_int),
         ("max_obs", ctypes.c_int),
+        ("std_weight_position", ctypes.c_float),
+        ("std_weight_velocity", ctypes.c_float),
     ]
 
 
@@ -134,6 +136,8 @@ class _ByteTrackLiveLibrary:
             track_buffer=int(cfg["track_buffer"]),
             frame_rate=int(cfg.get("frame_rate", 30)),
             max_obs=int(cfg.get("max_obs", 50)),
+            std_weight_position=float(cfg.get("std_weight_position", 1.0 / 20.0)),
+            std_weight_velocity=float(cfg.get("std_weight_velocity", 1.0 / 160.0)),
         )
         handle = self._library.boxmot_bytetrack_create(ctypes.byref(c_cfg))
         if not handle:
