@@ -11,6 +11,15 @@ def test_native_bytetrack_tracker_advertises_obb_support():
     assert native_module.NativeByteTrackTracker.supports_obb is True
 
 
+def test_native_bytetrack_resolves_kalman_weights():
+    cfg = native_module._resolve_tracker_cfg(
+        {"std_weight_position": 0.12, "std_weight_velocity": 0.03}
+    )
+
+    assert cfg["std_weight_position"] == 0.12
+    assert cfg["std_weight_velocity"] == 0.03
+
+
 def test_process_sequence_cpp_builds_native_command(monkeypatch, tmp_path):
     monkeypatch.setattr(native_module, "ensure_bytetrack_cpp_executable", lambda force_rebuild=False: Path("/tmp/bytetrack_replay"))
 

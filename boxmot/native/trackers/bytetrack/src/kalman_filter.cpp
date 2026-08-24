@@ -44,7 +44,7 @@ KalmanFilterXYWH::Vector AlignObbMeasurement(
         const double angle_cost = std::abs(theta_aligned - ref_theta);
         const double size_cost =
             std::abs(std::log(std::max(candidate[0], 1.0e-6) / ref_w)) +
-            std::abs(std::log(std::max(candidate[1], 1.0e-6) / ref_h));
+                                 std::abs(std::log(std::max(candidate[1], 1.0e-6) / ref_h));
         const double cost = angle_cost + (0.05 * size_cost);
         if (cost < best_cost) {
             best_cost = cost;
@@ -69,7 +69,9 @@ KalmanFilterXYWH::Vector EnforceXywhConstraints(KalmanFilterXYWH::Vector mean, c
 
 }  // namespace
 
-KalmanFilterXYAH::KalmanFilterXYAH() {
+KalmanFilterXYAH::KalmanFilterXYAH(const double std_weight_position,
+                                   const double std_weight_velocity)
+    : std_weight_position_(std_weight_position), std_weight_velocity_(std_weight_velocity) {
     motion_mat_.setIdentity();
     for (int i = 0; i < 4; ++i) {
         motion_mat_(i, 4 + i) = 1.0;
@@ -181,12 +183,16 @@ std::pair<KalmanFilterXYAH::Vector, KalmanFilterXYAH::Matrix> KalmanFilterXYAH::
     return {updated_mean, updated_covariance};
 }
 
-KalmanFilterXYWH::KalmanFilterXYWH(const int ndim)
+KalmanFilterXYWH::KalmanFilterXYWH(const int ndim,
+                                   const double std_weight_position,
+                                   const double std_weight_velocity)
     : ndim_(ndim),
       dim_x_(2 * ndim),
       is_obb_(ndim == 5),
       motion_mat_(dim_x_, dim_x_),
-      update_mat_(ndim_, dim_x_) {
+      update_mat_(ndim_, dim_x_),
+      std_weight_position_(std_weight_position),
+      std_weight_velocity_(std_weight_velocity) {
     if (ndim_ != 4 && ndim_ != 5) {
         throw std::invalid_argument("KalmanFilterXYWH ndim must be 4 (AABB) or 5 (OBB).");
     }
