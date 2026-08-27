@@ -254,7 +254,6 @@ class ByteTrack(BaseTracker):
 
         self.active_tracks = []  # type: list[STrack]
         self.lost_stracks = []  # type: list[STrack]
-        self.removed_stracks = []  # type: list[STrack]
 
     def _update_impl(
         self, dets: np.ndarray, img: np.ndarray = None, embs: np.ndarray = None,
@@ -384,8 +383,7 @@ class ByteTrack(BaseTracker):
         self.active_tracks = joint_stracks(self.active_tracks, refind_stracks)
         self.lost_stracks = sub_stracks(self.lost_stracks, self.active_tracks)
         self.lost_stracks.extend(lost_stracks)
-        self.lost_stracks = sub_stracks(self.lost_stracks, self.removed_stracks)
-        self.removed_stracks.extend(removed_stracks)
+        self.lost_stracks = sub_stracks(self.lost_stracks, removed_stracks)
         self.active_tracks, self.lost_stracks = remove_duplicate_stracks(
             self.active_tracks, self.lost_stracks
         )

@@ -40,7 +40,6 @@ private:
     bool is_obb_mode_ = false;
     std::vector<Track::Ptr> active_tracks_;
     std::vector<Track::Ptr> lost_tracks_;
-    std::vector<Track::Ptr> removed_tracks_;
 };
 
 }  // namespace bytetrack

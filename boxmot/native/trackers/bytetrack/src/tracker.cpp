@@ -192,7 +192,6 @@ void ByteTrackTracker::Reset() {
     Track::ResetCount();
     active_tracks_.clear();
     lost_tracks_.clear();
-    removed_tracks_.clear();
 }
 
 std::vector<Track::Ptr> ByteTrackTracker::CreateDetectionTracks(const std::vector<Detection>& detections) const {
@@ -243,8 +242,7 @@ std::vector<TrackOutput> ByteTrackTracker::PrepareOutput(
     lost_tracks_ = SubTracks(lost_tracks_, active_tracks_);
 
     lost_tracks_.insert(lost_tracks_.end(), lost_tracks.begin(), lost_tracks.end());
-    lost_tracks_ = SubTracks(lost_tracks_, removed_tracks_);
-    removed_tracks_.insert(removed_tracks_.end(), removed_tracks.begin(), removed_tracks.end());
+    lost_tracks_ = SubTracks(lost_tracks_, removed_tracks);
 
     auto [dedup_active, dedup_lost] = RemoveDuplicateTracks(active_tracks_, lost_tracks_);
     active_tracks_ = std::move(dedup_active);
